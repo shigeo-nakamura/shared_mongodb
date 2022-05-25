@@ -1,0 +1,17 @@
+[package]
+name = "shared_mongodb"
+version = "0.1.0"
+authors = ["Shigeo NAKAMURA <nakamura_shigeo@yahoo.com>"]
+edition = "2021"
+description = "Handy functions to share a mongodb client within a process"
+documentation = "https://docs.rs/shared_mongodb/"
+homepage = "https://crates.io/crates/shared_mongodb"
+repository = "https://github.com/shigeo-nakamura/shared_mongodb"
+readme = "README.md"
+keywords = ["mongodb", "actix"]
+categories = ["web-programming"]
+license = "Apache-2.0"
+maintenance = { status = "passively-developed" }
+
+[dependencies]
+mongodb = "2.1.0"
