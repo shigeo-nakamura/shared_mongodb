@@ -3,15 +3,22 @@
 //! # Examples
 //!
 //! ```
-//! use actix_web::{web, App, HttpServer};
-//! use std::sync::{Arc, Mutex};
-//! use shared_mongodb::{ClientHolder, database};
+//! #[actix_rt::main]
+//! async fn main() -> std::io::Result<()> {
+//!     use actix_web::{web, App, HttpServer};
+//!     use std::sync::{Arc, Mutex};
+//!     use shared_mongodb::{ClientHolder, database};
+//!     use mongodb::options::ClientOptions;
 //!
-//! let client_holder = Arc::new(Mutex::new(ClientHolder::new("mongodb+srv://...")));
-//! HttpServer::new(move || {
-//!     let app = App::new().app_data(client_holder.clone());
-//!     return app;
-//! });
+//!     let client_options = ClientOptions::parse("mongodb://root:password@localhost:12345").await;
+//!     let client_holder = Arc::new(Mutex::new(ClientHolder::new(client_options.unwrap())));
+//!     HttpServer::new(move || {
+//!         let app = App::new().app_data(client_holder.clone());
+//!         return app;
+//!     });
+//!
+//!     Ok(())
+//! }
 //! ```
 mod client;
 pub mod database;

@@ -1,3 +1,4 @@
+use mongodb::options::ClientOptions;
 use mongodb::Client;
 
 /// Holds a MongoDB Client.
@@ -6,21 +7,21 @@ pub struct ClientHolder {
     pub connected: bool,
     /// A MongoDB Client
     pub client: Option<Client>,
-    /// A MongoDB connection string
-    pub mongodb_uri: String,
+    /// A MongoDB ClientOptions
+    pub client_options: ClientOptions,
 }
 
 /// Create a new ClinetHolder.
 ///
 /// # Arguments
 ///
-/// * `mongodb_uri` - A MongoDB connection string
+/// * `client_options` - A MongoDB ClientOptions
 impl ClientHolder {
-    pub fn new(mongodb_uri: &str) -> Self {
+    pub fn new(client_options: ClientOptions) -> Self {
         Self {
             connected: false,
             client: None,
-            mongodb_uri: mongodb_uri.to_string(),
+            client_options: client_options,
         }
     }
 }

@@ -1,5 +1,5 @@
 use crate::ClientHolder;
-use mongodb::options::{ClientOptions, Tls, TlsOptions};
+use mongodb::options::ClientOptions;
 use mongodb::{Client, Database};
 use std::error;
 use std::sync::{Arc, Mutex};
@@ -24,10 +24,10 @@ pub async fn get(
             .database(database_name);
         return Ok(db);
     }
-    let mongodb_uri = client_holder.mongodb_uri.clone();
+    let client_options = client_holder.client_options.clone();
     drop(client_holder);
 
-    let new_client = connect(&mongodb_uri).await?;
+    let new_client = connect(client_options).await?;
 
     let mut client_holder = data.lock().unwrap();
     client_holder.client = Some(new_client.clone());
@@ -53,10 +53,7 @@ pub fn disconnect<T>(data: &Arc<Mutex<ClientHolder>>) {
 /// # Arguments
 ///
 /// * `mongodb_uri` - A MongoDB connection string
-async fn connect(mongodb_uri: &String) -> Result<Client, Box<dyn error::Error>> {
-    let mut client_options = ClientOptions::parse(mongodb_uri).await?;
-    let tls_options = TlsOptions::builder().build();
-    client_options.tls = Some(Tls::Enabled(tls_options));
+async fn connect(client_options: ClientOptions) -> Result<Client, Box<dyn error::Error>> {
     let new_client = Client::with_options(client_options)?;
     Ok(new_client)
 }
