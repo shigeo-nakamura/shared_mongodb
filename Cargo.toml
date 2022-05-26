@@ -1,6 +1,6 @@
 [package]
 name = "shared_mongodb"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Shigeo NAKAMURA <nakamura_shigeo@yahoo.com>"]
 edition = "2021"
 description = "Handy functions to share a mongodb client within a process"

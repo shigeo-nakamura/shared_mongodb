@@ -11,7 +11,7 @@
 //! #[actix_rt::main]
 //! async fn main() -> std::io::Result<()> {
 //!     let client_options = ClientOptions::parse("mongodb://root:password@localhost:12345").await;
-//!     let client_holder = Arc::new(Mutex::new(ClientHolder::new(client_options.unwrap())));
+//!     let client_holder = web::Data::new(Mutex::new(ClientHolder::new(client_options.unwrap())));
 //!     HttpServer::new(move || {
 //!         let app = App::new().app_data(client_holder.clone());
 //!         return app;
