@@ -1,6 +1,6 @@
 [package]
 name = "shared_mongodb"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Shigeo NAKAMURA <nakamura_shigeo@yahoo.com>"]
 edition = "2021"
 description = "Handy functions to share a mongodb client within a process"
@@ -13,8 +13,10 @@ categories = ["web-programming"]
 license = "Apache-2.0"
 maintenance = { status = "passively-developed" }
 
-[dependencies]
-mongodb = "2.1.0"
+[dependencies.mongodb]
+version = "2.2.1"
+default-features = false
+features = ["async-std-runtime"]
 
 [dev-dependencies]
 actix-web = "3"
