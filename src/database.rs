@@ -14,7 +14,7 @@ use std::sync::{Arc, Mutex};
 /// * `database_name` - The name of a Database
 pub async fn get(
     data: &Arc<Mutex<ClientHolder>>,
-    database_name: &String,
+    database_name: &str,
 ) -> Result<Database, Box<dyn error::Error>> {
     let client_holder = data.lock().unwrap();
     if client_holder.connected {
