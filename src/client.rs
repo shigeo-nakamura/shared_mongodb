@@ -7,7 +7,7 @@ pub struct ClientHolder {
     /// A MongoDB Client
     pub client: Option<Client>,
     /// A MongoDB connection string
-    pub mongodb_uri: Option<String>,
+    pub mongodb_uri: String,
 }
 
 /// Create a new ClinetHolder.
@@ -20,7 +20,7 @@ impl ClientHolder {
         Self {
             connected: false,
             client: None,
-            mongodb_uri: Some(mongodb_uri.to_string()),
+            mongodb_uri: mongodb_uri.to_string(),
         }
     }
 }

@@ -2,7 +2,6 @@ use crate::ClientHolder;
 use mongodb::options::{ClientOptions, Tls, TlsOptions};
 use mongodb::{Client, Database};
 use std::error;
-use std::io;
 use std::sync::{Arc, Mutex};
 
 /// Get the handle of the database.
@@ -28,14 +27,7 @@ pub async fn get(
     let mongodb_uri = client_holder.mongodb_uri.clone();
     drop(client_holder);
 
-    if mongodb_uri.is_none() {
-        return Err(Box::new(io::Error::new(
-            io::ErrorKind::Other,
-            "database_name is none".to_string(),
-        )));
-    }
-
-    let new_client = connect(&mongodb_uri.unwrap()).await?;
+    let new_client = connect(&mongodb_uri).await?;
 
     let mut client_holder = data.lock().unwrap();
     client_holder.client = Some(new_client.clone());
