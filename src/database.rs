@@ -43,7 +43,7 @@ pub async fn get(
 /// # Arguments
 ///
 /// * `data` - A ClinetHolder
-pub fn disconnect<T>(data: &Arc<Mutex<ClientHolder>>) {
+pub fn disconnect(data: &Arc<Mutex<ClientHolder>>) {
     let mut client_holder = data.lock().unwrap();
     client_holder.connected = false;
 }

@@ -22,6 +22,8 @@
 //!
 //! async fn handler(data: web::Data<Mutex<ClientHolder>>) -> std::io::Result<()> {
 //!     let db = database::get(&data, "My_Company");
+//!     database::disconnect(&data);
+//!
 //!     Ok(())
 //! }
 //! ```
