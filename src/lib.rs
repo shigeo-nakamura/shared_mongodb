@@ -24,6 +24,9 @@
 //!     let db = database::get(&data, "My_Company");
 //!     database::disconnect(&data);
 //!
+//!     let session = start_transaction(&data)?;
+//!     commit_transaction(&mut session);
+//!
 //!     Ok(())
 //! }
 //! ```
