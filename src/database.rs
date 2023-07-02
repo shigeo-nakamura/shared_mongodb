@@ -2,7 +2,8 @@ use crate::ClientHolder;
 use mongodb::options::ClientOptions;
 use mongodb::{Client, ClientSession, Database};
 use std::error;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
+use tokio::sync::Mutex;
 
 /// Get the handle of the client.
 /// If the client is not connected to the MongoDB cluster, establish a new connection and return the handle of the client.
@@ -12,7 +13,7 @@ use std::sync::{Arc, Mutex};
 /// * `data` - A ClinetHolder
 /// * `database_name` - The name of a Database
 async fn get_client(data: &Arc<Mutex<ClientHolder>>) -> Result<Client, Box<dyn error::Error>> {
-    let client_holder = data.lock().unwrap();
+    let client_holder = data.lock().await;
     if client_holder.connected {
         let client = client_holder.client.clone().unwrap();
         return Ok(client);
@@ -22,7 +23,7 @@ async fn get_client(data: &Arc<Mutex<ClientHolder>>) -> Result<Client, Box<dyn e
 
     let new_client = connect(client_options).await?;
 
-    let mut client_holder = data.lock().unwrap();
+    let mut client_holder = data.lock().await;
     client_holder.client = Some(new_client.clone());
     client_holder.connected = true;
     drop(client_holder);
@@ -50,8 +51,8 @@ pub async fn get(
 /// # Arguments
 ///
 /// * `data` - A ClinetHolder
-pub fn disconnect(data: &Arc<Mutex<ClientHolder>>) {
-    let mut client_holder = data.lock().unwrap();
+pub async fn disconnect(data: &Arc<Mutex<ClientHolder>>) {
+    let mut client_holder = data.lock().await;
     client_holder.connected = false;
 }
 
